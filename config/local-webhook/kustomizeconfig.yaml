@@ -1,0 +1,39 @@
+# This file is for teaching kustomize how to substitute name and namespace reference in CRD
+nameReference:
+- kind: Service
+  version: v1
+  fieldSpecs:
+  - kind: CustomResourceDefinition
+    version: v1
+    group: apiextensions.k8s.io
+    path: spec/conversion/webhook/clientConfig/service/name
+# [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix
+- kind: Service
+  version: v1
+  fieldSpecs:
+  - kind: MutatingWebhookConfiguration
+    group: admissionregistration.k8s.io
+    path: webhooks/clientConfig/service/name
+  - kind: ValidatingWebhookConfiguration
+    group: admissionregistration.k8s.io
+    path: webhooks/clientConfig/service/name
+
+namespace:
+- kind: CustomResourceDefinition
+  version: v1
+  group: apiextensions.k8s.io
+  path: spec/conversion/webhook/clientConfig/service/namespace
+  create: false
+# [WEBHOOK] To enable webhook, uncomment all the sections with [WEBHOOK] prefix
+- kind: MutatingWebhookConfiguration
+  group: admissionregistration.k8s.io
+  path: webhooks/clientConfig/service/namespace
+  create: true
+- kind: ValidatingWebhookConfiguration
+  group: admissionregistration.k8s.io
+  path: webhooks/clientConfig/service/namespace
+  create: true
+
+varReference:
+- path: metadata/annotations
+
