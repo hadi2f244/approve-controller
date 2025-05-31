@@ -163,10 +163,24 @@ func (r *CertificateSigningRequestReconciler) Reconcile(ctx context.Context, req
 		return ctrl.Result{}, err
 	}
 
+	// // Get the signing key pair from the Secret
+	// signingKeySecret := &corev1.Secret{}
+	// err = r.Client().Get(ctx, types.NamespacedName{
+	// 	Name:      "networkpolicy-signing-key",
+	// 	Namespace: "kube-system",
+	// }, signingKeySecret)
+	// if err != nil {
+	// 	log.Error(err, "Failed to get signing key Secret")
+	// 	return ctrl.Result{}, err
+	// }
+
+	// Get the certificate from the CSR status
+	certPEM := csr.Status.Certificate
+
 	// Prepare secret data - use only valid keys (alphanumeric, -, _ or .)
 	secretData := map[string][]byte{
 		"hash":     []byte(approvalHash),
-		"tls-crt":  csr.Status.Certificate,
+		"tls-crt":  certPEM,
 		"csr-name": []byte(csr.Name),
 	}
 
