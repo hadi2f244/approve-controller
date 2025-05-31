@@ -19,6 +19,7 @@ package main
 import (
 	"crypto/tls"
 	"flag"
+	"github.com/hadi2f244/approve-controller/internal/pkg/log"
 	"os"
 	"path/filepath"
 
@@ -214,8 +215,13 @@ func main() {
 		}
 	}
 	if err = (&controller.CertificateSigningRequestReconciler{
-		Client: mgr.GetClient(),
-		Scheme: mgr.GetScheme(),
+		SharedReconciler: controller.NewSharedReconciler(
+			mgr.GetClient(),
+			mgr.GetScheme(),
+			mgr.GetAPIReader(),
+			log.Log.WithName("NS2IPQuickNetworkPolicy"),
+			mgr.GetEventRecorderFor("NS2IPQuickNetworkPolicy"),
+		),
 	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "CertificateSigningRequest")
 		os.Exit(1)

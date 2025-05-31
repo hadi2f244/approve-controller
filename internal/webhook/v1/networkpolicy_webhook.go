@@ -38,6 +38,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
+	"time"
 )
 
 // nolint:unused
@@ -53,6 +54,7 @@ const (
 	LabelNetworkPolicyApproval = "networkpolicy.webhook.io/approval"
 	// SecretTypeNetworkPolicyApproval is the type for approved NetworkPolicy secrets
 	SecretTypeNetworkPolicyApproval = "networkpolicy.webhook.io/approval"
+	// Note: CSRs are cluster-scoped resources while Secrets and NetworkPolicies are namespace-scoped
 )
 
 // SetupNetworkPolicyWebhookWithManager registers the webhook for NetworkPolicy in the manager.
@@ -193,6 +195,7 @@ func (v *NetworkPolicyCustomValidator) validateNetworkPolicyApproval(ctx context
 }
 
 // checkForApprovedCertificate checks if there's a valid approved certificate for the NetworkPolicy
+// Note: Secrets are namespace-scoped resources (unlike CSRs which are cluster-scoped)
 func (v *NetworkPolicyCustomValidator) checkForApprovedCertificate(ctx context.Context, np *networkingv1.NetworkPolicy, hash string) (bool, error) {
 	secretName := fmt.Sprintf("np-approval-%s-%s", np.Namespace, np.Name)
 	secret := &corev1.Secret{}
@@ -226,15 +229,30 @@ func (v *NetworkPolicyCustomValidator) checkForApprovedCertificate(ctx context.C
 	}
 
 	// Verify certificate data exists
-	cert, exists := secret.Data["tls.crt"]
+	cert, exists := secret.Data["tls-crt"]
 	if !exists || len(cert) == 0 {
 		return false, nil
 	}
+	// Verify the certificate is valid
+	block, _ := pem.Decode(cert)
+	if block == nil {
+		return false, nil
+	}
+	certificate, err := x509.ParseCertificate(block.Bytes)
+	if err != nil {
+		return false, nil
+	}
+	if certificate.NotAfter.Before(time.Now()) {
+		return false, nil
+	}
+	// Todo: Verify the certificate is signed by the Kubernetes CA
 
 	return true, nil
 }
 
 // createApprovalCSR creates a CSR for NetworkPolicy approval
+// CSRs are cluster-scoped resources, so they don't have a namespace field
+// Note: CSRs are cluster-scoped resources, not namespace-scoped
 func (v *NetworkPolicyCustomValidator) createApprovalCSR(ctx context.Context, np *networkingv1.NetworkPolicy, hash, csrName string) error {
 	// Create CSR with NetworkPolicy metadata
 	//npData, err := json.Marshal(NetworkPolicyData{
