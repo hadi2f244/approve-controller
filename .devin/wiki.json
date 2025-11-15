@@ -1,0 +1,291 @@
+{
+  "repo_notes": [
+    {
+      "content": ""
+    }
+  ],
+  "pages": [
+    {
+      "title": "Home",
+      "purpose": "Welcome page providing an overview of the approve-controller project, its purpose (enforcing approval workflows for NetworkPolicies), and key concepts",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Architecture",
+      "purpose": "High-level architectural overview explaining how the system is structured and how components interact",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "System Components",
+      "purpose": "Detailed description of the three core components: Controller Manager, NetworkPolicy Webhook, and CSR Controller",
+      "parent": "Architecture",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Approval Workflow",
+      "purpose": "End-to-end explanation of the NetworkPolicy approval workflow from creation through CSR approval to final deployment",
+      "parent": "Architecture",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Security Model",
+      "purpose": "Explanation of the hash-based verification system, RBAC requirements, and security guarantees",
+      "parent": "Architecture",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "NetworkPolicy Webhook",
+      "purpose": "Deep dive into the most important component: the NetworkPolicy admission webhook that validates and enforces approval requirements",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Validation Logic",
+      "purpose": "Detailed explanation of how the webhook validates NetworkPolicies, checks for approvals, and creates CSRs",
+      "parent": "NetworkPolicy Webhook",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Hash-Based Verification",
+      "purpose": "Technical details of how policy hashes are generated, stored, and verified to ensure approval integrity",
+      "parent": "NetworkPolicy Webhook",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Webhook Configuration",
+      "purpose": "How to configure and customize the NetworkPolicy webhook, including webhook registration and certificate management",
+      "parent": "NetworkPolicy Webhook",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "CertificateSigningRequest Controller",
+      "purpose": "Deep dive into the CSR controller that watches approved CSRs and creates approval Secrets",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Reconciliation Logic",
+      "purpose": "Detailed explanation of the controller's reconciliation loop, event filtering, and approval detection",
+      "parent": "CertificateSigningRequest Controller",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Secret Management",
+      "purpose": "How the controller creates, updates, and manages approval Secrets, including finalizer handling",
+      "parent": "CertificateSigningRequest Controller",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Orphaned Secret Cleanup",
+      "purpose": "Explanation of the garbage collection mechanism for cleaning up Secrets when CSRs are deleted",
+      "parent": "CertificateSigningRequest Controller",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Deployment Guide",
+      "purpose": "Complete guide for deploying approve-controller to a Kubernetes cluster",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Installation",
+      "purpose": "Step-by-step installation instructions including prerequisites, building images, and deploying to clusters",
+      "parent": "Deployment Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "RBAC Configuration",
+      "purpose": "Detailed explanation of required Kubernetes permissions and RBAC setup for the controller",
+      "parent": "Deployment Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Certificate Management",
+      "purpose": "How to set up cert-manager and configure TLS certificates for webhook and metrics endpoints",
+      "parent": "Deployment Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Configuration Options",
+      "purpose": "Reference for all command-line flags, environment variables, and configuration options",
+      "parent": "Deployment Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Development Guide",
+      "purpose": "Guide for developers who want to contribute to or modify the approve-controller",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Development Environment Setup",
+      "purpose": "How to set up a local development environment using DevContainers and required tools",
+      "parent": "Development Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Running Locally",
+      "purpose": "How to run the controller locally for development and debugging, including webhook setup",
+      "parent": "Development Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Testing",
+      "purpose": "Guide to the test suite including unit tests, integration tests, and end-to-end tests",
+      "parent": "Development Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "CI/CD Pipeline",
+      "purpose": "Explanation of the GitHub Actions workflows for testing, linting, and releasing",
+      "parent": "Development Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Building and Packaging",
+      "purpose": "How to build binaries, Docker images, and release artifacts using Make and Docker",
+      "parent": "Development Guide",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "API Reference",
+      "purpose": "Technical reference documentation for APIs, resources, and configurations",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Kubernetes Resources",
+      "purpose": "Reference for NetworkPolicy, CertificateSigningRequest, and Secret resources used by the system",
+      "parent": "API Reference",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Annotations and Labels",
+      "purpose": "Reference for all custom annotations and labels used by approve-controller",
+      "parent": "API Reference",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Webhook Specification",
+      "purpose": "Technical specification of the admission webhook endpoints, request/response formats, and failure modes",
+      "parent": "API Reference",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    },
+    {
+      "title": "Troubleshooting",
+      "purpose": "Common issues, debugging techniques, and solutions for problems with approve-controller",
+      "page_notes": [
+        {
+          "content": ""
+        }
+      ]
+    }
+  ]
+}
